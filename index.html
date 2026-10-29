@@ -630,7 +630,7 @@ var CONSTRUCCION = {
     }
     window[cb] = function(r){
       try{
-        var lista = (r && r.success && r.negocios) ? r.negocios : [];
+        var lista = (r && r.success) ? (r.negocio ? [r.negocio] : (r.negocios || [])) : [];
         for(var i = 0; i < lista.length; i++){
                       if(String(lista[i].id).trim().toUpperCase() === String(ID_NEGOCIO).trim().toUpperCase()){
             if(window.lActualizarFotos) window.lActualizarFotos(lista[i].fotos || []);
@@ -642,7 +642,7 @@ var CONSTRUCCION = {
       limpiar();
     };
     sc.onerror = limpiar;
-    sc.src = API_CANDADO + '?action=obtenerNegocios&callback=' + cb + '&_=' + Date.now();
+    sc.src = API_CANDADO + '?action=negocioPublico&id=' + encodeURIComponent(ID_NEGOCIO) + '&callback=' + cb + '&_=' + Date.now();
     document.head.appendChild(sc);
   }
   setTimeout(pedir, 2500);
