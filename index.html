@@ -123,6 +123,43 @@ footer .footer-slogan{color:#888;font-size:12px}
 .max-width:100%;max-height:68vh;border-radius:12px;border:3px solid #5BB8D4;color:#0A0E17;border:none;padding:14px 30px;border-radius:12px;font-weight:700;cursor:pointer;font-size:15px}
 @media(min-width:640px){.contact-grid{grid-template-columns:1fr 1fr}.btns-group{flex-direction:row;flex-wrap:wrap}.btn-link{flex:1;min-width:140px}}
 
+/* ===== Botón flotante al directorio con destello cada 10 s ===== */
+.fab-directorio{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));right:16px;z-index:4500;display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,#6B4FA0,#A0689A);color:#fff;font-family:inherit;font-size:13px;font-weight:800;letter-spacing:-0.01em;text-decoration:none;box-shadow:0 8px 28px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.15), inset 0 1px 0 rgba(255,255,255,.25);transition:transform .2s var(--ease), box-shadow .3s var(--ease);-webkit-tap-highlight-color:transparent;overflow:hidden}
+.fab-directorio:active{transform:scale(.95)}
+.fab-directorio .fab-ico{font-size:16px;line-height:1;display:inline-block;animation:warningPulse 1.6s ease-in-out infinite}
+.fab-directorio .fab-txt{white-space:nowrap;position:relative;z-index:2}
+.fab-directorio{opacity:0;visibility:hidden;transition:opacity .4s ease, visibility .4s ease}
+.fab-directorio.visible{opacity:1;visibility:visible}
+/* Destello: barrido de luz que cruza el botón */
+.fab-directorio::before{content:'';position:absolute;top:0;bottom:0;left:-60%;width:45%;background:linear-gradient(100deg,transparent 0%,rgba(255,255,255,.65) 50%,transparent 100%);transform:skewX(-20deg);pointer-events:none;z-index:1;opacity:0}
+.fab-directorio.destello::before{animation:destelloFab 1.1s ease-out}
+@keyframes destelloFab{
+  0%{left:-60%;opacity:0}
+  10%{opacity:1}
+  60%{left:120%;opacity:1}
+  70%{opacity:0}
+  100%{left:120%;opacity:0}
+}
+
+/* Pulso de brillo externo (halo) */
+.fab-directorio.destello{animation:pulsoFab 1.1s ease-out}
+@keyframes pulsoFab{
+  0%{box-shadow:0 8px 28px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.15), inset 0 1px 0 rgba(255,255,255,.25)}
+  40%{box-shadow:0 8px 28px rgba(0,0,0,.45), 0 0 0 4px rgba(255,255,255,.35), 0 0 26px 6px rgba(255,255,255,.55), inset 0 1px 0 rgba(255,255,255,.35)}
+  100%{box-shadow:0 8px 28px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.15), inset 0 1px 0 rgba(255,255,255,.25)}
+}
+
+/* Pulso del icono warning */
+@keyframes warningPulse{
+  0%,100%{transform:scale(1);filter:drop-shadow(0 0 0 rgba(255,200,0,0))}
+  50%{transform:scale(1.15);filter:drop-shadow(0 0 6px rgba(255,200,0,.9))}
+}
+@media(prefers-reduced-motion:reduce){
+  .fab-directorio .fab-ico{animation:none}
+  .fab-directorio.destello::before{animation:none}
+  .fab-directorio.destello{animation:none}
+}
+@media(max-width:380px){.fab-directorio{padding:10px 14px;font-size:12px;bottom:calc(14px + env(safe-area-inset-bottom));right:12px}}
 </style></head><body>
 <div id="splash" class="espacial">
   <canvas id="splashStars"></canvas>
@@ -139,7 +176,7 @@ footer .footer-slogan{color:#888;font-size:12px}
 <section class="section" id="lExterno" style="display:none"><div class="externo-card"><a id="lExternoBtn" href="#" target="_blank" rel="noopener" class="externo-btn" style="background:linear-gradient(135deg,#6B4FA0,#A0689A)">Visitar </a></div></section>
 <div class="contact-grid"><div class="contact-item"><div class="cl">🕐 Horario</div><div class="cv">8:00 am a 7:00 pm</div></div><div class="contact-item"><div class="cl">✉️ Correo</div><div class="cv">proyectosolaronline@gmail.com</div></div></div>
 <section class="section"><h2>📍 Encuéntranos</h2><div class="map-card"><iframe loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=-88.41515%2C20.616312%2C-88.40315%2C20.628312&layer=mapnik&marker=20.622312%2C-88.40915"></iframe></div><p class="direccion">Tío Manolo, 36, Calle 11, Kaua, Yucatán, 97764, México</p></section>
-<div class="btns-group"><a href="https://script.google.com/macros/s/AKfycbzGhO5vd6-p1hYqSgmLKbomXlCmspjMyf4Ky3J_H4Pg2WGZJLr3XfDySS1EFSMlEvgNJQ/exec?negocio=neg-0020" class="btn-link btn-catalogo">🛍️ Ver catálogo</a><a href="https://www.google.com/maps/dir/?api=1&destination=20.622312,-88.40915" class="btn-link btn-maps" target="_blank">🧭 Cómo llegar</a><button type="button" class="btn-link btn-correo" onclick="correoContacto()">✉️ Escribir por correo</button></div>
+<div class="btns-group"><a href="https://script.google.com/macros/s/AKfycbzrFBrPRMg_aAMe-VijThR09R3kOiyh_Mt6o1oovscXz64fQebKbGfn0X9_NyPOm7_vJA/exec?negocio=neg-0020" class="btn-link btn-catalogo">🛍️ Ver catálogo</a><a href="https://www.google.com/maps/dir/?api=1&destination=20.622312,-88.40915" class="btn-link btn-maps" target="_blank">🧭 Cómo llegar</a><button type="button" class="btn-link btn-correo" onclick="correoContacto()">✉️ Escribir por correo</button></div>
 <section class="qr-section"><img class="qr-img" id="lQrImg" alt="QR" onclick="compartirQR()"><p class="qr-caption"><span onclick="compartirQR()">📱 Escanea para compartir</span></p></section>
 <footer><p class="footer-nombre" style="color:#5BB8D4">⚡ balam Artesanias maya kaua yucatan</p><p class="footer-slogan">Artesanias en directo del artesano maya en tus manos</p></footer>
 <section class="promo-final"><p>🌐 ¿Quieres una página como esta totalmente <strong>gratis</strong>? Solo pagas la administración de contenido.</p><a href="mailto:prototipowebapp@gmail.com?subject=Quiero%20mi%20p%C3%A1gina%20web%20gratis">📧 Escríbenos a prototipowebapp@gmail.com</a></section>
@@ -157,6 +194,11 @@ footer .footer-slogan{color:#888;font-size:12px}
     </div>
   </div>
 </div>
+<a href="https://proyectosolaronline.github.io/Directorio-negocios/" target="_blank" rel="noopener" class="fab-directorio" id="fabDirectorio" aria-label="Visitar directorio de negocios registrados">
+  <span class="fab-ico">⚠️</span>
+  <span class="fab-txt">Visitar directorio de negocios registrados</span>
+</a>
+
 <script>
 (function(){
   var splash = document.getElementById('splash');
@@ -268,7 +310,16 @@ function lAjustar(){
   // ===== QR DINÁMICO: visible + compartir + imprimir =====
   // URL real de la página (siempre correcta, sin hardcodear)
   var URL_ACTUAL = window.location.href;
-
+  // Botón "Ver catálogo": le agrega esta landing como origen (el catálogo regresa aquí tras 30 min sin actividad)
+  (function(){
+    var a = document.querySelector('a.btn-catalogo');
+    if(!a) return;
+    try{
+      var u = new URL(a.getAttribute('href'));
+      u.searchParams.set('origen_url', URL_ACTUAL.split('#')[0]);
+      a.href = u.toString();
+    }catch(e){}
+  })();
   // 1) QR visible en la sección "Escanea para compartir"
   (function generarQrVisible(){
     var img = document.getElementById('lQrImg');
@@ -581,7 +632,7 @@ var CONSTRUCCION = {
       try{
         var lista = (r && r.success && r.negocios) ? r.negocios : [];
         for(var i = 0; i < lista.length; i++){
-           if(String(lista[i].id) === String(ID_NEGOCIO)){
+                      if(String(lista[i].id).trim().toUpperCase() === String(ID_NEGOCIO).trim().toUpperCase()){
             if(window.lActualizarFotos) window.lActualizarFotos(lista[i].fotos || []);
                         if(window.lActualizarPopup) window.lActualizarPopup(String(lista[i].mensajeEmergente || '').replace(/[\n\r]/g, ' ').trim());
             actualizarExterno(lista[i].Urlexterna || lista[i].urlexterna || lista[i].UrlExterna || lista[i].urlExterna);            break;
@@ -596,6 +647,60 @@ var CONSTRUCCION = {
   }
   setTimeout(pedir, 2500);
   setInterval(pedir, 20000);
+})();
+/* ===== Mostrar el botón directorio 3 s y ocultarlo, cada 10 s ===== */
+(function mostrarBotonDirectorio(){
+  var fab = document.getElementById('fabDirectorio');
+  if(!fab) return;
+  function mostrar(){
+    fab.classList.add('visible');
+    setTimeout(function(){
+      fab.classList.remove('visible');
+    }, 3000);
+  }
+  setTimeout(function(){
+    mostrar();
+    setInterval(mostrar, 10000);
+  }, 3000);
+})();
+</script>
+<style>
+.fab-qr{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:16px;z-index:4500;width:54px;height:54px;border-radius:50%;border:3px solid #fff;background:linear-gradient(135deg,#6B4FA0,#A0689A);color:#fff;display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer;box-shadow:0 8px 28px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.15);-webkit-tap-highlight-color:transparent}
+.fab-qr:active{transform:scale(.95)}
+.fab-qr:focus-visible{outline:3px solid #5BB8D4;outline-offset:3px}
+.fab-qr svg{width:26px;height:26px}
+</style>
+<button type="button" class="fab-qr" id="fabQr" onclick="abrirQRCatalogo()" aria-label="Compartir catálogo con código QR"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v1M14 20h1M18 18h3v3h-3z"/></svg></button>
+<script>
+(function(){
+  var TIEMPO = '1h';   // 6s = segundos, 6m = minutos, 6h = horas, 6d = días
+  function aMs(t){
+    var m = /^\s*(\d+(?:\.\d+)?)\s*([smhd])\s*$/i.exec(String(t));
+    if(!m) return 3600000;
+    return parseFloat(m[1]) * {s:1000, m:60000, h:3600000, d:86400000}[m[2].toLowerCase()];
+  }
+  var urlTxt = function(){ return document.querySelector('#qrPrintOv .qp-url'); };
+  var origAbrir = window.abrirQRImprimir;
+  window.abrirQRImprimir = function(){
+    var t = urlTxt(); if(t) t.style.display = '';
+    if(origAbrir) origAbrir();
+  };
+  window.abrirQRCatalogo = function(){
+    var a = document.querySelector('a.btn-catalogo');
+    if(!a){ window.abrirQRImprimir(); return; }
+    var url = a.href;
+    try{
+      var u = new URL(a.href);
+      u.searchParams.set('exp', Date.now() + aMs(TIEMPO));
+      u.searchParams.set('vista', 'compartir');
+      url = u.toString();
+    }catch(e){}
+    var im = document.getElementById('qpImg');
+    if(im) im.src = 'https://api.qrserver.com/v1/create-qr-code/?size=600x600&margin=10&data=' + encodeURIComponent(url);
+    var t = urlTxt(); if(t) t.style.display = 'none';
+    var ov = document.getElementById('qrPrintOv');
+    if(ov) ov.classList.add('activo');
+  };
 })();
 </script>
 </body></html>
